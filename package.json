@@ -1,0 +1,19 @@
+{
+  "name": "com.audune.utils.types",
+  "displayName": "Serializable Type",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "Serializable type class for Unity 2022 LTS or higher",
+  "documentationUrl": "https://github.com/audunegames/serializabletype",
+  "changelogUrl": "https://github.com/audunegames/serializabletype/commits/v1.0.0",
+  "licensesUrl": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "license": "GPL-3.0-or-later",
+  "author": {
+    "name": "Audune Games",
+    "email": "support@audune.com",
+    "url": "https://audune.com/"
+  },
+  "dependencies": {
+    "com.audune.utils.unityeditor": "2.0.0"
+  }
+}
