@@ -1,6 +1,6 @@
 {
   "name": "com.audune.utils.types",
-  "displayName": "Serializable Type",
+  "displayName": "Serializable Types",
   "version": "1.0.0",
   "unity": "2022.3",
   "description": "Serializable type class for Unity 2022 LTS or higher",
