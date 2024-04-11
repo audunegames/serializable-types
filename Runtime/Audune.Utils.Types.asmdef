@@ -1,0 +1,16 @@
+{
+    "name": "Audune.Utils.Types",
+    "rootNamespace": "Audune.Utils.Types",
+    "references": [
+        "GUID:8d3eaed832bf78046bfb9b4fc4d6d44e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
