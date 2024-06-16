@@ -17,6 +17,7 @@ namespace Audune.Utils.Types.Editor
 
     // The types of the attribute drawer
     private List<Type> _types;
+    private bool _hasChildTypes = false;
 
     
     // Draw the property GUI
@@ -31,16 +32,28 @@ namespace Audune.Utils.Types.Editor
         return;
       }
 
-      _types ??= TypeExtensions.GetChildTypes(_attribute.baseType).ToList();
-
+      if (_types == null)
+      {
+        _types = TypeExtensions.GetChildTypes(_attribute.baseType).ToList();
+        if (_types.Count > 0)
+          _hasChildTypes = true;
+        else
+          _types = new List<Type>() { _attribute.baseType };
+      }
+      
       var typeName = property.FindPropertyRelative("_typeName");
       if (string.IsNullOrEmpty(typeName.stringValue))
-        typeName.stringValue = _types[0].AssemblyQualifiedName;
+        typeName.stringValue =  _types[0].AssemblyQualifiedName;
 
       label = EditorGUI.BeginProperty(rect, label, property);
 
-      var newType = EditorGUIExtensions.ItemPopup(rect, label, _types, type => type.AssemblyQualifiedName == typeName.stringValue, type => new GUIContent(type.ToDisplayString(_attribute?.displayOptions ?? TypeDisplayOptions.None)));
-      typeName.stringValue = newType.AssemblyQualifiedName;
+      using (new EditorGUI.DisabledScope(!_hasChildTypes))
+      {
+        var newType = EditorGUIExtensions.ItemPopup(rect, label, _types, type => type.AssemblyQualifiedName == typeName.stringValue, type => new GUIContent(type.ToDisplayString(_attribute?.displayOptions ?? TypeDisplayOptions.None)));
+        typeName.stringValue = newType.AssemblyQualifiedName;
+      }
+
+      EditorGUI.EndProperty();
     }
 
     // Return the property height
