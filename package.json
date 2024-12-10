@@ -3,9 +3,9 @@
   "displayName": "Serializable Types",
   "version": "1.0.1",
   "unity": "2022.3",
-  "description": "Serializable type class for Unity 2022 LTS or higher",
-  "documentationUrl": "https://github.com/audunegames/serializabletype",
-  "changelogUrl": "https://github.com/audunegames/serializabletype/commits/v1.0.1",
+  "description": "Enables Unity to serialize a reference to a C# type in the editor, made for Unity 2022 LTS or higher.",
+  "documentationUrl": "https://github.com/audunegames/serializable-types",
+  "changelogUrl": "https://github.com/audunegames/serializable-types/commits/v1.0.1",
   "licensesUrl": "https://www.gnu.org/licenses/gpl-3.0.html",
   "license": "GPL-3.0-or-later",
   "author": {
