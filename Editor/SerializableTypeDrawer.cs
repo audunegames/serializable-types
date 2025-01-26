@@ -50,7 +50,7 @@ namespace Audune.Utils.Types.Editor
       using (new EditorGUI.DisabledScope(!_hasChildTypes))
       {
         var newType = EditorGUIExtensions.ItemPopup(rect, label, _types, type => type.AssemblyQualifiedName == typeName.stringValue, type => new GUIContent(type.ToDisplayString(_attribute?.displayOptions ?? TypeDisplayOptions.None)));
-        typeName.stringValue = newType.AssemblyQualifiedName;
+        typeName.stringValue = newType?.AssemblyQualifiedName;
       }
 
       EditorGUI.EndProperty();

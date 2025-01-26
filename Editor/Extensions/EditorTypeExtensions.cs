@@ -37,7 +37,6 @@ namespace Audune.Utils.Types.Editor
         else
           return baseType.Name;
       }
-      
     }
     #endregion
 
