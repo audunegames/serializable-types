@@ -15,7 +15,7 @@ Enables Unity to serialize a reference to a C# type in the editor.
 
 This package depends on the following packages:
 
-* [Unity IMGUI Editor Utilities](https://openupm.com/packages/com.audune.utils.unityeditor/), version **2.0.5** or higher.
+* [Unity IMGUI Editor Utilities](https://openupm.com/packages/com.audune.utils.unityeditor/), version **2.0.7** or higher.
 
 If you're installing the required packages from the [OpenUPM registry](https://openupm.com/), make sure to add a scoped registry with the URL `https://package.openupm.com` and the required scopes before installing the packages.
 
