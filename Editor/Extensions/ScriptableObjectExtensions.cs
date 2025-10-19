@@ -3,11 +3,17 @@ using UnityEngine;
 
 namespace Audune.Utils.Types.Editor
 {
-  // Class that defines extension methods for types in the editor
+  /// <summary>
+  /// Class that defines extension methods for scriptable objects in the editor.
+  /// </summary>
   public static class ScriptableObjectExtensions
   {
     #region Creating scriptable objects with fancy names based on theyr type
-    // Create a scriptable object with its name set to the nice type name
+    /// <summary>
+    /// Create a scriptable object with its name set to the display string of the type.
+    /// </summary>
+    /// <param name="type">The type for the isntance of the scriptable object.</param>
+    /// <returns>A <see cref="ScriptableObject"/> instance of the specified type with its name set to the display string of the type.</returns>
     public static ScriptableObject CreateInstance(Type type)
     {
       var obj = ScriptableObject.CreateInstance(type);
@@ -15,7 +21,11 @@ namespace Audune.Utils.Types.Editor
       return obj;
     }
 
-    // Create a scriptable object with its name set to the nice type name
+    /// <summary>
+    /// Create a scriptable object with its name set to the display string of the type.
+    /// </summary>
+    /// <typeparam name="TObject">The type for the isntance of the scriptable object.</typeparam>
+    /// <returns>A <see cref="ScriptableObject"/> instance of the specified type with its name set to the display string of the type.</returns>
     public static TObject CreateInstance<TObject>() where TObject : ScriptableObject
     {
       return CreateInstance(typeof(TObject)) as TObject;

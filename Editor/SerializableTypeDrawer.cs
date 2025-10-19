@@ -8,19 +8,28 @@ using UnityEngine;
 
 namespace Audune.Utils.Types.Editor
 {
-  // Class that defines a drawer for serializable types
+  /// <summary>
+  /// Class that defines a property drawer for serializable types.
+  /// </summary>
   [CustomPropertyDrawer(typeof(SerializableType))]
   public class SerializableTypeDrawer : PropertyDrawer
   {
-    // The options attribute of the attribute drawer
+    // The options attribute of the property drawer.
     private SerializableTypeOptionsAttribute _attribute;
 
-    // The types of the attribute drawer
+    // The types of the property drawer.
     private List<Type> _types;
+
+    // Specify if the serialized type has child types.
     private bool _hasChildTypes = false;
 
     
-    // Draw the property GUI
+    /// <summary>
+    /// Draw the GUI for a property.
+    /// </summary>
+    /// <param name="rect">The rect to draw the property in.</param>
+    /// <param name="property">The property to draw the GUI for.</param>
+    /// <param name="label">The label for the property.</param>
     public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
     {
       using var scope = new EditorGUI.PropertyScope(rect, label, property);
@@ -56,7 +65,12 @@ namespace Audune.Utils.Types.Editor
       EditorGUI.EndProperty();
     }
 
-    // Return the property height
+    /// <summary>
+    /// Return the height for a property.
+    /// </summary>
+    /// <param name="property">The property to return the height for.</param>
+    /// <param name="label">The label for the property.</param>
+    /// <returns>The height of the specified property.</returns>
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
       return EditorGUIUtility.singleLineHeight;
