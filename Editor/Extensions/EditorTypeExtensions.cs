@@ -34,7 +34,7 @@ namespace Audune.Utils.Types.Editor
       {
         var builder = new StringBuilder();
         builder.Append(ObjectNames.NicifyVariableName(baseType.Name));
-        if (!displayOptions.HasFlag(TypeDisplayOptions.DontShowNamespace))
+        if (!displayOptions.HasFlag(TypeDisplayOptions.DontShowNamespace) && !string.IsNullOrEmpty(baseType.Namespace))
           builder.Append($" ({baseType.Namespace})");
         return builder.ToString();
       }
