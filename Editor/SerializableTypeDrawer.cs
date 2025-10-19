@@ -43,7 +43,7 @@ namespace Audune.Utils.Types.Editor
 
       if (_types == null)
       {
-        _types = TypeExtensions.GetChildTypes(_attribute.baseType).ToList();
+        _types = TypeExtensions.GetChildTypes(_attribute.baseType, _attribute.hiddenTypes).ToList();
         if (_types.Count > 0)
           _hasChildTypes = true;
         else

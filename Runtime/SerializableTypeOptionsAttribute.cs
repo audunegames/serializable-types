@@ -19,6 +19,11 @@ namespace Audune.Utils.Types
     /// </summary>
     public TypeDisplayOptions displayOptions { get; set; }
 
+    /// <summary>
+    /// The hidden type flagsfor the type.
+    /// </summary>
+    public HiddenTypes hiddenTypes { get; set; }
+
 
     /// <summary>
     /// Constructor
