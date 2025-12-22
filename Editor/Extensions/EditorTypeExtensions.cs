@@ -2,6 +2,7 @@ using Audune.Utils.UnityEditor.Editor;
 using System;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,6 +14,10 @@ namespace Audune.Utils.Types.Editor
   public static class EditorTypeExtensions
   {
     #region Getting the display name of types
+    // Regex for generic type names
+    private static Regex _genericTypeNameRegex = new Regex(@"(.+)`(\d+)", RegexOptions.Compiled);
+
+
     /// <summary>
     /// Return a display string for a type.
     /// </summary>
@@ -32,8 +37,10 @@ namespace Audune.Utils.Types.Editor
       }
       else if (!displayOptions.HasFlag(TypeDisplayOptions.DontUseNicifiedNames))
       {
+        var typeName = NicifyGenericTypeName(ObjectNames.NicifyVariableName(baseType.Name));
+
         var builder = new StringBuilder();
-        builder.Append(ObjectNames.NicifyVariableName(baseType.Name));
+        builder.Append(typeName);
         if (!displayOptions.HasFlag(TypeDisplayOptions.DontShowNamespace) && !string.IsNullOrEmpty(baseType.Namespace))
           builder.Append($" ({baseType.Namespace})");
         return builder.ToString();
@@ -45,6 +52,22 @@ namespace Audune.Utils.Types.Editor
         else
           return baseType.Name;
       }
+    }
+
+    /// <summary>
+    /// Nicify a generic type name by replacing a backtick notation with a angle bracket notation.
+    /// </summary>
+    /// <param name="typeName">The type name to nicify.</param>
+    /// <returns>The nicified generic type name</returns>
+    public static string NicifyGenericTypeName(string typeName)
+    {
+      var match = _genericTypeNameRegex.Match(typeName);
+      if (!match.Success)
+        return typeName;
+
+      var typeArgumentAmount = int.Parse(match.Groups[2].Value);
+      var commas = string.Join("", Enumerable.Repeat(",", typeArgumentAmount - 1));
+      return $"{match.Groups[1].Value}<{commas}>";
     }
     #endregion
 
