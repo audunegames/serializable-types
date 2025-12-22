@@ -1,5 +1,8 @@
 using Audune.Utils.UnityEditor.Editor;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -71,6 +74,25 @@ namespace Audune.Utils.Types.Editor
     }
     #endregion
 
+    #region Getting the display names for child types
+    /// <summary>
+    /// Return an enumerable of the child types and their corresponding display strings, sorted alphabetically, of a base type.
+    /// </summary>
+    /// <param name="baseType">The base type to get child types of.</param>
+    /// <param name="displayOptions">The options for returning the display string.</param>
+    /// <returns>An <c>IEnumerable</c> of the child types and their corresponding display strings of the specified base type.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="baseType"/> is set to null.</exception>
+    public static IEnumerable<(Type type, string displayString)> GetChildTypeDisplayStrings(this Type baseType, TypeDisplayOptions displayOptions, HiddenTypes hiddenTypes = HiddenTypes.None)
+    {
+      if (baseType == null)
+        throw new ArgumentNullException(nameof(baseType));
+
+      return TypeExtensions.GetChildTypes(baseType, hiddenTypes)
+        .Select(type => (type, displayString: ToDisplayString(type, displayOptions)))
+        .OrderBy(t => t.displayString, StringComparer.OrdinalIgnoreCase);
+    }
+    #endregion
+
     #region Creating generic menus for child types
     /// <summary>
     /// Return a generic menu of child types of the specified base type.
@@ -87,7 +109,7 @@ namespace Audune.Utils.Types.Editor
         throw new ArgumentNullException(nameof(baseType));
 
       var menu = new GenericMenu();
-      foreach (var type in TypeExtensions.GetChildTypes(baseType))
+      foreach (var (type, displayString) in baseType.GetChildTypeDisplayStrings(displayOptions))
         menu.AddItem(new GUIContent(ToDisplayString(type, displayOptions)), type == selectedType, () => onClicked(type));
       return menu;
     }
@@ -106,8 +128,8 @@ namespace Audune.Utils.Types.Editor
         throw new ArgumentNullException(nameof(attribute));
 
       var menu = new GenericMenu();
-      foreach (var type in TypeExtensions.GetChildTypes(attribute.baseType))
-        menu.AddItem(new GUIContent(ToDisplayString(type, attribute.displayOptions)), type == selectedType, () => onClicked(type));
+      foreach (var (type, displayString) in attribute.baseType.GetChildTypeDisplayStrings(attribute.displayOptions))
+        menu.AddItem(new GUIContent(displayString), type == selectedType, () => onClicked(type));
       return menu;
     }
     #endregion

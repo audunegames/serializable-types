@@ -18,7 +18,7 @@ namespace Audune.Utils.Types.Editor
     private SerializableTypeOptionsAttribute _attribute;
 
     // The types of the property drawer.
-    private List<Type> _types;
+    private List<(Type type, string displayString)> _types;
 
     // Specify if the serialized type has child types.
     private bool _hasChildTypes = false;
@@ -43,22 +43,22 @@ namespace Audune.Utils.Types.Editor
 
       if (_types == null)
       {
-        _types = TypeExtensions.GetChildTypes(_attribute.baseType, _attribute.hiddenTypes).ToList();
+        _types = _attribute.baseType.GetChildTypeDisplayStrings(_attribute.displayOptions, _attribute.hiddenTypes).ToList();
         if (_types.Count > 0)
           _hasChildTypes = true;
         else
-          _types = new List<Type>() { _attribute.baseType };
+          _types = new List<(Type type, string displayString)>() { (_attribute.baseType, _attribute.baseType.ToDisplayString(_attribute.displayOptions)) };
       }
       
       var typeName = property.FindPropertyRelative("_typeName");
       if (string.IsNullOrEmpty(typeName.stringValue))
-        typeName.stringValue =  _types[0].AssemblyQualifiedName;
+        typeName.stringValue =  _types[0].type.AssemblyQualifiedName;
 
       label = EditorGUI.BeginProperty(rect, label, property);
 
       using (new EditorGUI.DisabledScope(!_hasChildTypes))
       {
-        var newType = EditorGUIExtensions.ItemPopup(rect, label, _types, type => type.AssemblyQualifiedName == typeName.stringValue, type => new GUIContent(type.ToDisplayString(_attribute?.displayOptions ?? TypeDisplayOptions.None)));
+        var (newType, _) = EditorGUIExtensions.ItemPopup(rect, label, _types, t => t.type.AssemblyQualifiedName == typeName.stringValue, t => new GUIContent(t.displayString));
         typeName.stringValue = newType?.AssemblyQualifiedName;
       }
 

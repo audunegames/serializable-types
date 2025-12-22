@@ -15,7 +15,7 @@ namespace Audune.Utils.Types
     /// </summary>
     /// <param name="baseType">The base type to get child types of.</param>
     /// <returns>An <c>IEnumerable</c> of the child types of the specified base type.</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="baseType"/> is set to null.</exception>
     public static IEnumerable<Type> GetChildTypes(this Type baseType, HiddenTypes hiddenTypes = HiddenTypes.None)
     {
       if (baseType == null)
